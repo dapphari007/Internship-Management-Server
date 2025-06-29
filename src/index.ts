@@ -86,6 +86,32 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Internship Platform API Server',
+    version: '1.0.0',
+    status: 'Running',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/health',
+      api: '/api',
+      auth: '/api/auth',
+      users: '/api/users',
+      internships: '/api/internships',
+      applications: '/api/applications',
+      companies: '/api/companies',
+      tasks: '/api/tasks',
+      courses: '/api/courses',
+      analytics: '/api/analytics',
+      messages: '/api/messages',
+      search: '/api/search',
+      notifications: '/api/notifications',
+      portfolio: '/api/portfolio'
+    }
+  });
+});
+
 // Apply different rate limiters based on endpoint
 app.use('/health', healthLimiter);
 app.use('/api/notifications', notificationsLimiter);
