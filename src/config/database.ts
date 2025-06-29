@@ -11,6 +11,10 @@ const pool = new Pool(
         ssl: process.env.NODE_ENV === 'production' 
           ? { rejectUnauthorized: false } 
           : false,
+        // Optimized pool settings for Transaction Pooler
+        max: 20, // Maximum number of clients in the pool
+        idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+        connectionTimeoutMillis: 10000, // Return an error after 10 seconds if connection could not be established
       }
     : {
         user: process.env.DB_USER || 'postgres',
@@ -19,6 +23,10 @@ const pool = new Pool(
         password: process.env.DB_PASSWORD || 'admin',
         port: parseInt(process.env.DB_PORT || '5432'),
         ssl: false,
+        // Local development pool settings
+        max: 10,
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 10000,
       }
 );
 
