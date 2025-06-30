@@ -50,14 +50,26 @@ pool.on('error', (err) => {
 
 // Test initial connection
 pool.connect()
-  .then(() => console.log('🚀 Initial database connection successful'))
+  .then((client) => {
+    console.log('🚀 Initial database connection successful');
+    client.release(); // Release the client back to the pool
+  })
   .catch((err) => {
     console.error('💥 Initial database connection failed:', err);
     console.error('Database configuration:', {
       usingDatabaseUrl: !!process.env.DATABASE_URL,
       nodeEnv: process.env.NODE_ENV,
-      databaseUrlPreview: process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 20) + '...' : 'not set'
+      databaseUrlPreview: process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 50) + '...' : 'not set'
     });
+    
+    // Provide helpful error messages
+    if (err.code === 'ENETUNREACH') {
+      console.error('🔧 ENETUNREACH Error - Network unreachable. This typically means:');
+      console.error('   1. ❌ IPv6 connectivity issue - Your DATABASE_URL is using IPv6');
+      console.error('   2. ✅ Solution: Use Supabase Transaction Pooler (IPv4 compatible)');
+      console.error('   3. 🔗 Expected format: postgresql://postgres.PROJECT_ID:PASSWORD@aws-0-REGION.pooler.supabase.com:6543/postgres');
+      console.error('   4. 📍 Current URL preview:', process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 80) + '...' : 'NOT SET');
+    }
   });
 
 export default pool;

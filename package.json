@@ -23,6 +23,7 @@
     "setup:all": "npm run setup:notifications && npm run setup:courses && npm run setup:admin-tasks"
   },
   "dependencies": {
+    "@types/node": "^20.10.0",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -34,9 +35,9 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
     "pg": "^8.16.2",
-    "typescript": "^5.3.3",
-    "@types/node": "^20.10.0"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
