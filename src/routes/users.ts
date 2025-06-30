@@ -340,7 +340,7 @@ router.get('/', authenticateToken, async (req: AuthRequest, res) => {
     const { page = 1, limit = 10, role, search } = req.query;
     const offset = (Number(page) - 1) * Number(limit);
 
-    let query = 'SELECT id, email, full_name, role, avatar_url, phone, location, address, bio, website, linkedin_url, github_url, instagram_url, twitter_url, portfolio_url, university, major, graduation_year, gpa, skills, interests, languages, company_name, company_size, industry, company_description, profile_complete, profile_completion_percentage, verified, created_at, updated_at FROM users';
+    let query = 'SELECT id, email, full_name, role, avatar_url, phone, location, address, bio, website, linkedin_url, github_url, instagram_url, twitter_url, portfolio_url, university, major, graduation_year, gpa, skills, interests, languages, company_name, company_size, industry, company_description, profile_complete, COALESCE(profile_completion_percentage, 50) as profile_completion_percentage, verified, created_at, updated_at FROM users';
     let countQuery = 'SELECT COUNT(*) FROM users';
     const queryParams: any[] = [];
     const conditions: string[] = [];
